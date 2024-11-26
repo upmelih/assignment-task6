@@ -32,7 +32,6 @@ jobs:
 
     - name: Build Android
       run: |
-        mkdir android
         cd android
         ./gradlew assembleDebug
 
