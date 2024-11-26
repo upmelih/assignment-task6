@@ -1,15 +1,14 @@
-name: React Native CI
+name: React Native CI/CD
 
 on:
-  pull_request:
-    branches:
-      - main
   push:
-    branches:
-      - main
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
-  android:
+  build:
+
     runs-on: ubuntu-latest
 
     steps:
@@ -21,22 +20,20 @@ jobs:
       with:
         node-version: '14'
 
+    - name: Install Yarn
+      run: npm install --global yarn
+
     - name: Install dependencies
-      run: npm install
+      run: yarn install
 
-    - name: Set up JDK
-      uses: actions/setup-java@v3
+    - name: Run tests
+      run: yarn test --watchAll=false
+
+    - name: Build project
+      run: yarn build
+
+    - name: Upload build artifact
+      uses: actions/upload-artifact@v3
       with:
-        distribution: 'zulu'
-        java-version: '11'
-
-    - name: Build Android
-      run: |
-        mkdir android
-        cd android
-        ./gradlew assembleDebug
-
-    - name: Run Android tests
-      run: |
-        cd android
-        ./gradlew test
+        name: build-artifact
+        path: build/
