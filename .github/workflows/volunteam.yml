@@ -30,28 +30,23 @@ jobs:
         run: npm test
 
   build:
+    needs: lint-and-test
     runs-on: ubuntu-latest
-    needs: test
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
+        uses: actions/checkout@v3
 
       - name: Install dependencies
         run: npm install
 
-      - name: Build project
-        run: npm run build
+      - name: Build the Expo app
+        run: expo build:web
 
-      - name: Archive production artifacts
+      - name: Upload build artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: my-build-artifacts
-          path: ./build
+          name: build
+          path: .build/
 
   notify:
     runs-on: ubuntu-latest
