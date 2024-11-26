@@ -3,10 +3,10 @@ name: Release Workflow
 on:
     push:       # Trigger when code is pushed to the repository
         branches:
-          - main
+          - MelihBranchin
     pull_request:
         branches:
-           - main
+           - MelihBranch
     release:
         types: [published]
 
