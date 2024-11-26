@@ -40,7 +40,7 @@ jobs:
         run: npm install
 
       - name: Build the Expo app
-        run: expo build:web
+        run: expo build:ios
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
