@@ -40,27 +40,3 @@ jobs:
         cd android
         ./gradlew test
 
-  ios:
-    runs-on: macos-latest
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'ios'))
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '14'
-
-    - name: Install dependencies
-      run: npm install
-
-    - name: Install CocoaPods
-      run: pod install --project-directory=ios
-
-    - name: Build iOS
-      run: xcodebuild -workspace ios/YourApp.xcworkspace -scheme YourApp -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 11,OS=latest' build
-
-    - name: Run iOS tests
-      run: xcodebuild -workspace ios/YourApp.xcworkspace -scheme YourApp -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 11,OS=latest' test
