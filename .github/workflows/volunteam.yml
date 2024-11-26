@@ -24,10 +24,10 @@ jobs:
           node-version: '14'
 
       - name: Install dependencies
-        run: npm install
+        run: yarn add
 
       - name: Run unit tests
-        run: npm test
+        run: yarn test
 
   build:
     needs: test
@@ -37,7 +37,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install dependencies
-        run: npm install
+        run: yarn add
 
       - name: Build the Expo app
         run: expo build:ios
